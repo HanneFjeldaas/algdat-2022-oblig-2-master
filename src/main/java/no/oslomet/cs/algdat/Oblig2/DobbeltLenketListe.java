@@ -28,6 +28,11 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         private Node(T verdi) {
             this(verdi, null, null);
         }
+
+        //laget selv, lov?
+        //public Node(){
+
+        //}
     }
 
     // instansvariabler
@@ -37,7 +42,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     private int endringer;         // antall endringer i listen
 
     public DobbeltLenketListe() {
-        throw new UnsupportedOperationException();
+
     }
 
     public DobbeltLenketListe(T[] a) {
@@ -48,14 +53,33 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         throw new UnsupportedOperationException();
     }
 
-    @Override
+
     public int antall() {
-        throw new UnsupportedOperationException();
+        antall = 0;
+
+        //sjekk om listen er tom
+        if(hode == null){
+            return antall;
+        }
+
+        //opprette hjelpenode, setter den på starten
+        Node node;
+        node = this.hode;
+
+        while(node != null){ //så lenge node ikke er null
+            antall++;           //øker antallet med 1
+            node = node.neste;  //settes til neste node
+        }
+        return antall;
     }
 
-    @Override
     public boolean tom() {
-        throw new UnsupportedOperationException();
+        if(hode == null){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
