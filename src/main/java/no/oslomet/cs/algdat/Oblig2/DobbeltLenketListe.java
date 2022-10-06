@@ -150,9 +150,57 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         throw new UnsupportedOperationException();
     }
 
-    @Override
+    //Indekskontroll hentet fra kompendiet, programkode 3.2.1 a
+    public void indeksKontroll(int indeks, boolean leggInn)
+    {
+        if (indeks < 0 ? true : (leggInn ? indeks > antall() : indeks >= antall()))
+            throw new IndexOutOfBoundsException(melding(indeks));
+    }
+
+    //Oppgave 3 finnNode
+
+    public Node<T> finnNode(int indeks){
+
+
+        if(indeks < 2){
+            Node<T> node = hode;
+            if(indeks==0){
+                return node;
+            }
+            else {
+                return finnNode(indeks-1);
+            }
+        }
+                 /*
+        if(indeks<2){
+            Node<T> temp = hode;
+            int counter = 0;
+            while(counter<antall-1){
+                temp = temp.neste;
+                counter++;
+            }
+            return temp;
+
+        }
+
+                  */
+        else {
+            Node<T> temp = hale;
+            int counter = antall-1;
+            while(counter>indeks){
+                counter--;
+                temp = temp.forrige;
+            }
+            return temp;
+        }
+
+
+
+    }
+
     public T hent(int indeks) {
-        throw new UnsupportedOperationException();
+        indeksKontroll(indeks, false);
+        return finnNode(indeks).verdi;
     }
 
     @Override
