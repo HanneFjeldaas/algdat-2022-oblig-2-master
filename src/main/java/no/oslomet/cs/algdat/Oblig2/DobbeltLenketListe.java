@@ -6,6 +6,7 @@ package no.oslomet.cs.algdat.Oblig2;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -46,47 +47,38 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         Objects.requireNonNull(a);
 
         //Feilmelding om den er tom:
-       // if(a[i] == null){
-            //System.out.println("Tabellen a er tom");
-        //}
-
-        //opprette en node
-        //Node nyNode = new Node("", null, null);
-
-        for(int i = 0; i < a.length; i++){
-            if(a[i] == null){
-                System.out.println("Tabellen a er tom");
-            }
-            //hvis listen er tom, legges første element inn som hode
-
-            else if(hode == null){
-                Node nyNode = new Node("", null,null);
-                nyNode.verdi = a[i];
-                nyNode.neste = null;
-                nyNode.forrige = null;
-                nyNode = hode;
-            }
-            else if(hode.neste == null){
-                //hode.neste = a[i];
-            }
+        if(a.length<1){
+            System.out.println("Tabellen er tom");
         }
 
+        for(T etObjekt : a){
+            //hoppe over nullverdier i tabellen
+            if(etObjekt==null){
+                continue;
+            }
+            //putte data fra tabellen inn i en node
+            Node temp = new Node("");
+            temp.verdi = etObjekt;
 
-        //opprette noder:
-        //Node node1 = new Node("3", null, null);
-        //Node node2 = new Node("5", node1, null);
-        //node1.neste = node2;
-        //Node node3 = new Node("7", node2, null);
-        //node2.neste = node3;
-
-
-        //DobbeltLenketListe[] noder =  {
-          //      new DobbeltLenketListe(),
-        //};
-
-
-
+            //sjekk om node-listen er tom
+            if(hode==null){
+                hode = temp;
+            }
+            else{
+                //finne siste node
+                Node siste = hode;
+                while(siste.neste != null){
+                    siste = siste.neste;
+                }
+                siste.neste = temp;
+            }
+        }
     }
+
+
+
+
+
 
     public Liste<T> subliste(int fra, int til) {
         throw new UnsupportedOperationException();
@@ -103,7 +95,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         //opprette hjelpenode, setter den på starten
         Node node;
-        node = this.hode;
+        node = hode;
 
         while(node != null){    //så lenge node ikke er null
             antall++;           //øker antallet med 1
