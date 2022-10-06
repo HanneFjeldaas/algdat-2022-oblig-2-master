@@ -115,22 +115,25 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     public boolean leggInn(T verdi) {
         Objects.requireNonNull(verdi);
-        //opprette en liste
-        //DobbeltLenketListe<T> liste = new DobbeltLenketListe<T>();
 
         //opprette en node med input-verdien:
-        Node nyNode = new Node(verdi);
+        Node nyNode = new Node("");
+        nyNode.verdi = verdi;
 
         if(hode == null){
             hode = hale = nyNode;
-            hode.forrige = null;
-            hale.neste = null;
+            nyNode.forrige = null;
+            nyNode.neste = null;
         }
-        else{
-            hale.neste = nyNode;
-            nyNode.forrige=hale;
+        else {
+            Node node = new Node("");
+            node = hode;
+            while(node.neste != null){
+                node = node.neste;
+            }
+            node.neste = nyNode;
+            nyNode.forrige = node;
             hale = nyNode;
-            hale.neste = null;
         }
         antall++;
         endringer++;
@@ -180,9 +183,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     public String toString() {
         StringBuilder ut = new StringBuilder();
-
         ut.append("[");
-
         Node node = hode;
         String fyll = "";
         if(hode == null){
@@ -194,13 +195,25 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             node = node.neste;
             fyll = ", ";
         }
-        ut.append("]!");
-
+        ut.append("]");
         return ut.toString();
     }
 
     public String omvendtString() {
-        StringBuilder ut = new StringBuilder("[]");
+        StringBuilder ut = new StringBuilder();
+        ut.append("[");
+        Node node = hale;
+        String fyll = "";
+        if(hale == null){
+            ut.append("]");
+            return ut.toString();
+        }
+        while (hale != null){
+            ut.append(fyll + hale.verdi);
+            hale = hale.forrige;
+            fyll = ", ";
+        }
+        ut.append("]");
         return ut.toString();
     }
 
