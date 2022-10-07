@@ -153,9 +153,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         throw new UnsupportedOperationException();
     }
 
-    @Override
+
+    //kode fra kompendiet, løsningsforslag til oppgave 2 i avsnitt 3.3.3.
     public boolean inneholder(T verdi) {
-        throw new UnsupportedOperationException();
+        return indeksTil(verdi) != -1;
     }
 
 
@@ -210,9 +211,23 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return finnNode(indeks).verdi;
     }
 
-    @Override
+    //noe av koden fra kompendiet, løsningsforslag til oppgave 2 i avsnitt 3.3.3.
     public int indeksTil(T verdi) {
-        throw new UnsupportedOperationException();
+
+        if(verdi == null){
+            return -1;
+        }
+        if(antall < 1){
+            return -1;
+        }
+        Node current = hode;
+        for(int i = 0; i<antall; i++){
+            if(current.verdi.equals(verdi)){
+                return i;
+            }
+            current = current.neste;
+        }
+        return -1;
     }
 
     //neseten all kode i oppdater-metoden er fra kompendiet, Programkode 3.3.3 b)
