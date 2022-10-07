@@ -6,7 +6,6 @@ package no.oslomet.cs.algdat.Oblig2;
 
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Objects;
 
 
@@ -44,12 +43,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     public DobbeltLenketListe(T[] a) {
         //Tabellen skal ikke være tom:
-        Objects.requireNonNull(a);
-
-        //Feilmelding om den er tom:
-        if(a.length<1){
-            System.out.println("Tabellen er tom");
-        }
+        Objects.requireNonNull(a, "Tabellen er tom");
 
         for(T etObjekt : a){
             //hoppe over nullverdier i tabellen
@@ -78,10 +72,24 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
 
+    //oppgave 3b fratilkontroll()
+    private void fratilkontroll(){
 
+    }
 
+    //3b - funker ikke
     public Liste<T> subliste(int fra, int til) {
-        throw new UnsupportedOperationException();
+
+        Liste<T> nyListe = new DobbeltLenketListe<>();
+
+        Node<T> nyNode = hode;
+        nyNode.verdi = finnNode(fra).verdi;
+        for(int i = fra; i<til; i++){
+           // current = i.verdi;
+            nyListe.leggInn(nyNode.verdi);
+            nyNode = nyNode.neste;
+        }
+        return nyListe;
     }
 
 
@@ -152,12 +160,15 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
     //Oppgave 3 finnNode
+    //for treg
 
     public Node<T> finnNode(int indeks){
 
         //Programkode 3.3.3 a) fra kompendiet
-        if(indeks<2){
-            Node<T> temp = hode;
+        int dele = antall/2;
+        Node<T> temp = hode;
+        if(indeks<dele){
+           // Node<T> temp = hode;
             if(indeks == 0){
                 return temp;
             }
@@ -169,12 +180,24 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
         //søke fra hale og bakover:
 
-        else {
-            Node <T> temp = hale;
+        /*else {
+            //Node <T>
+            temp = hale;
             if(indeks == antall-1){
                 return temp;
             }
             else{
+                temp = temp.forrige;
+            }
+            return temp;
+        }
+
+         */
+                else {
+            temp = hale;
+            int counter = antall-1;
+            while(counter>indeks){
+                counter--;
                 temp = temp.forrige;
             }
             return temp;
@@ -192,10 +215,18 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         throw new UnsupportedOperationException();
     }
 
-    @Override
+    //neseten all kode i oppdater-metoden er fra kompendiet, Programkode 3.3.3 b)
     public T oppdater(int indeks, T nyverdi) {
-        throw new UnsupportedOperationException();
+        Objects.requireNonNull(indeks);
+        Objects.requireNonNull(nyverdi);
+        indeksKontroll(indeks, false);
+        Node<T> temp = finnNode(indeks);
+        T gammelVerdi = temp.verdi;
+        temp.verdi = nyverdi;
+        return gammelVerdi;
     }
+
+
 
     @Override
     public boolean fjern(T verdi) {
