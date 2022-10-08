@@ -41,6 +41,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     public DobbeltLenketListe() {
     }
 
+    //til oppgave 3b) subliste
+    public DobbeltLenketListe(int antall, Node<T> hode, Node<T> hale) {
+        this.antall = antall;
+        this.hode = hode;
+        this.hale = hale;
+    }
+
     public DobbeltLenketListe(T[] a) {
         //Tabellen skal ikke være tom:
         Objects.requireNonNull(a, "Tabellen er tom");
@@ -70,25 +77,36 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-
-
-    //oppgave 3b fratilkontroll()
-    private void fratilkontroll(){
-
-    }
-
     //3b - funker ikke
     public Liste<T> subliste(int fra, int til) {
+        fratilKontroll(antall, fra, til);
+        Liste<T> nyListe = new DobbeltLenketListe<>(0, null, null);
 
-        Liste<T> nyListe = new DobbeltLenketListe<>();
-
-        Node<T> nyNode = hode;
-        nyNode.verdi = finnNode(fra).verdi;
-        for(int i = fra; i<til; i++){
-           // current = i.verdi;
-            nyListe.leggInn(nyNode.verdi);
-            nyNode = nyNode.neste;
+        int start = fra;
+        Node<T> current = hode;
+        while(start>0){
+            current=current.neste;
+            start--;
         }
+        for(int i = fra; i < til; i++){
+            nyListe.leggInn(current.verdi);
+            nyListe.antall();
+            current = current.neste;
+        }
+        /*
+        Node<T> current = finnNode(fra);
+        Node<T> dupe = finnNode(fra);
+
+
+        for(int i = fra; i<til; i++){
+            dupe.neste = current.neste;
+            dupe.forrige = current.forrige;
+            dupe.verdi = current.verdi;
+            nyListe.leggInn(dupe.verdi);
+            current = current.neste;
+        }
+
+         */
         return nyListe;
     }
 
@@ -120,7 +138,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     }
 
-
+    @Override
     public boolean leggInn(T verdi) {
         Objects.requireNonNull(verdi);
 
@@ -160,15 +178,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
 
-    //Oppgave 3 finnNode
+    //Oppgave 3a
     //for treg
-
     public Node<T> finnNode(int indeks){
 
         //Programkode 3.3.3 a) fra kompendiet
-        int dele = antall/2;
         Node<T> temp = hode;
-        if(indeks<dele){
+        if(indeks<antall/2){
            // Node<T> temp = hode;
             if(indeks == 0){
                 return temp;
@@ -176,7 +192,6 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             for(int i = 0; i<indeks;i++){
                 temp = temp.neste;
             }
-            return temp;
         }
 
         //søke fra hale og bakover:
@@ -194,18 +209,17 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         }
 
          */
-                else {
+        else {
             temp = hale;
-            int counter = antall-1;
-            while(counter>indeks){
-                counter--;
+            while(indeks<antall-1){
+                antall--;
                 temp = temp.forrige;
             }
-            return temp;
         }
+        return temp;
     }
 
-    //hentet fra kompendiet, programkode 3.3.3 b)
+    //fra kompendiet, programkode 3.3.3 b)
     public T hent(int indeks) {
         indeksKontroll(indeks, false);
         return finnNode(indeks).verdi;
@@ -230,7 +244,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         return -1;
     }
 
-    //neseten all kode i oppdater-metoden er fra kompendiet, Programkode 3.3.3 b)
+    //mye av koden er fra kompendiet, Programkode 3.3.3 b)
+    @Override
     public T oppdater(int indeks, T nyverdi) {
         Objects.requireNonNull(indeks);
         Objects.requireNonNull(nyverdi);
@@ -338,6 +353,22 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     public static <T> void sorter(Liste<T> liste, Comparator<? super T> c) {
         throw new UnsupportedOperationException();
+    }
+
+    // fratilKontroll() fra kompendiet, Programkode 1.2.3 a)
+    private static void fratilKontroll(int antall, int fra, int til)
+    {
+        if (fra < 0)                               // fra er negativ
+            throw new IndexOutOfBoundsException
+                    ("fra(" + fra + ") er negativ!");
+
+        if (til > antall)                          // til er utenfor listen
+            throw new IndexOutOfBoundsException
+                    ("til(" + til + ") > antall(" + antall + ")");
+
+        if (fra > til)                             // fra er større enn til
+            throw new IllegalArgumentException
+                    ("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
     }
 
 } // class DobbeltLenketListe
