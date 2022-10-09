@@ -145,10 +145,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
 
     public boolean tom() {
-        if(hode == null){
-            return true;
-        }
-        return false;
+        return hode == null;
 
     }
 
@@ -293,7 +290,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             return ut.toString();
         }
         while (node != null){
-            ut.append(fyll + node.verdi);
+            ut.append(fyll).append(node.verdi);
             node = node.neste;
             fyll = ", ";
         }
@@ -304,14 +301,13 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     public String omvendtString() {
         StringBuilder ut = new StringBuilder();
         ut.append("[");
-        Node node = hale;
         String fyll = "";
         if(hale == null){
             ut.append("]");
             return ut.toString();
         }
         while (hale != null){
-            ut.append(fyll + hale.verdi);
+            ut.append(fyll).append(hale.verdi);
             hale = hale.forrige;
             fyll = ", ";
         }
