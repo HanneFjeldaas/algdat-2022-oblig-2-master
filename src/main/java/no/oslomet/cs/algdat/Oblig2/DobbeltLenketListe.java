@@ -33,7 +33,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     }
     // instansvariabler
     private Node hode;          // peker til den første i listen
-    private Node<T> hale;          // peker til den siste i listen
+    private Node hale;          // peker til den siste i listen
     private int antall;            // antall noder i listen
     private int endringer;         // antall endringer i listen
 
@@ -95,15 +95,19 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     public Liste<T> subliste(int fra, int til) {
         fratilKontroll(this.antall, fra, til);
 
+        //ny liste til å sette kopi-nodene inn i:
         Liste<T> nyListe = new DobbeltLenketListe<>();
 
         int start = fra;
+        //finner riktig plass å starte
         Node<T> current = hode;
         while(start>0){
             current=current.neste;
             start--;
         }
+        //looper i intervallet fra og med fra, til men ikke med til
         for(int i = fra; i < til; i++){
+            //legger verdiene over i ny liste
             nyListe.leggInn(current.verdi);
             nyListe.antall();
             current = current.neste;
@@ -126,23 +130,18 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public int antall() {
         antall = 0;
-
         //sjekk om listen er tom
         if(hode == null){
             return antall;
         }
-
         //opprette hjelpenode, setter den på starten
         Node node;
         node = hode;
-
         while(node != null){    //så lenge node ikke er null
             antall++;           //øker antallet med 1
             node = node.neste;  //settes til neste node
         }
-
         return antall;
-
     }
 
     public boolean tom() {
@@ -167,8 +166,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             nyNode.neste = null;
         }
         else {
-            Node node = new Node("");
-            node = hode;
+            Node node = hode;
             while(node.neste != null){
                 node = node.neste;
             }
@@ -232,9 +230,11 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     //noe av koden fra kompendiet, løsningsforslag til oppgave 2 i avsnitt 3.3.3.
     public int indeksTil(T verdi) {
 
+        //returner -1 om man leter etter null-verdier
         if(verdi == null){
             return -1;
         }
+        //returnerer -1 om listen er tom
         if(antall < 1){
             return -1;
         }
@@ -251,12 +251,17 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     //mye av koden er fra kompendiet, Programkode 3.3.3 b)
     @Override
     public T oppdater(int indeks, T nyverdi) {
+        //ingen nullverdier tillatt:
         Objects.requireNonNull(indeks);
         Objects.requireNonNull(nyverdi);
         indeksKontroll(indeks, false);
+        //finner noden vi vil oppdatere
         Node<T> temp = finnNode(indeks);
+        //trekker ut gammelverdi fra noden:
         T gammelVerdi = temp.verdi;
+        //opddaterer noden til nyverdi:
         temp.verdi = nyverdi;
+        endringer++;
         return gammelVerdi;
     }
 
