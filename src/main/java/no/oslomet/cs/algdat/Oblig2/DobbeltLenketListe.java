@@ -75,57 +75,37 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     // fratilKontroll() fra kompendiet, Programkode 1.2.3 a)
 
-    private static void fratilKontroll(int antall, int fra, int til)
-    {
-        if (fra < 0)                               // fra er negativ
-            throw new IndexOutOfBoundsException
-                    ("fra(" + fra + ") er negativ!");
-
-        if (til > antall)                          // til er utenfor listen
-            throw new IndexOutOfBoundsException
-                    ("til(" + til + ") > antall(" + antall + ")");
-
-        if (fra > til)                             // fra er større enn til
-            throw new IllegalArgumentException
-                    ("fra(" + fra + ") > til(" + til + ") - illegalt intervall!");
+    private static void fratilKontroll(int antall, int fra, int til) {
+        if (fra < 0) {
+            throw new IndexOutOfBoundsException("fra verdien: " + fra + " er negativ!");
+        }
+        if (til > antall) {
+            throw new IndexOutOfBoundsException("til verdien: " + til + " er utenfor listen!");
+        }
+        if (fra > til) {
+            throw new IllegalArgumentException("fra verdien: " + fra + " er større enn til verdien: " + til + " = Ugyldig! Try again!");
+        }
     }
 
 
-    //3b - funker ikke
     public Liste<T> subliste(int fra, int til) {
-        fratilKontroll(this.antall, fra, til);
+        fratilKontroll(antall, fra, til);
 
         //ny liste til å sette kopi-nodene inn i:
         Liste<T> nyListe = new DobbeltLenketListe<>();
 
-        int start = fra;
         //finner riktig plass å starte
-        Node<T> current = hode;
-        while(start>0){
-            current=current.neste;
-            start--;
-        }
-        //looper i intervallet fra og med fra, til men ikke med til
-        for(int i = fra; i < til; i++){
-            //legger verdiene over i ny liste
-            nyListe.leggInn(current.verdi);
-            nyListe.antall();
-            current = current.neste;
-        }
-        /*
         Node<T> current = finnNode(fra);
-        Node<T> dupe = finnNode(fra);
-        for(int i = fra; i<til; i++){
-            dupe.neste = current.neste;
-            dupe.forrige = current.forrige;
-            dupe.verdi = current.verdi;
-            nyListe.leggInn(dupe.verdi);
-            current = current.neste;
-        }
 
-         */
+        //legger til verdier i listen
+        for (int i = fra; i < til; i++) {
+            nyListe.leggInn(current.verdi);
+            current = current.neste;
+    }
         return nyListe;
     }
+
+
 
     @Override
     public int antall() {
@@ -190,22 +170,20 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     //Oppgave 3a
     //for treg
+
     public Node<T> finnNode(int indeks){
 
         //Programkode 3.3.3 a) fra kompendiet
         Node<T> temp = hode;
+        if(indeks == 0){
+            return temp;
+        }
         if(indeks<antall/2){
-           // Node<T> temp = hode;
-            if(indeks == 0){
-                return temp;
-            }
             for(int i = 0; i<indeks;i++){
                 temp = temp.neste;
             }
         }
-
         //søke fra hale og bakover:
-
         else {
             temp = hale;
             while(indeks<antall-1){
@@ -214,15 +192,16 @@ public class DobbeltLenketListe<T> implements Liste<T> {
             }
         }
         return temp;
-
-
     }
+
 
     //fra kompendiet, programkode 3.3.3 b)
     public T hent(int indeks) {
         indeksKontroll(indeks, false);
         return finnNode(indeks).verdi;
     }
+
+
 
     //noe av koden fra kompendiet, løsningsforslag til oppgave 2 i avsnitt 3.3.3.
     public int indeksTil(T verdi) {
