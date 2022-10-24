@@ -197,7 +197,7 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
     //Oppgave 3a
-    // hjelpemetode
+    // hjelpemetode fra kompendiet
     private Node<T> finnNode(int indeks)
     {
         Node<T> p;
