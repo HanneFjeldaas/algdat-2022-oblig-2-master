@@ -170,24 +170,24 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     //Oppgave 3a
     //for treg
+    private Node<T> finnNode(int indeks) {
 
-    public Node<T> finnNode(int indeks){
-
-        //Programkode 3.3.3 a) fra kompendiet
-        Node<T> temp = hode;
-        if(indeks == 0){
-            return temp;
+        if (indeks < 0 || indeks > antall) {
+            throw new IndexOutOfBoundsException("Indeks er ugyldig");
         }
-        if(indeks<antall/2){
-            for(int i = 0; i<indeks;i++){
+        Node<T> temp;
+
+        if (indeks <= antall/2) {
+            temp = hode;
+            for (int i=0; i<indeks; i++) {
                 temp = temp.neste;
             }
-        }
-        //søke fra hale og bakover:
-        else {
+        } else {
+            if (indeks==antall) {
+                return null;
+            }
             temp = hale;
-            while(indeks<antall-1){
-                antall--;
+            for (int i = antall-1; i>indeks; i--) {
                 temp = temp.forrige;
             }
         }

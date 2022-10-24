@@ -426,6 +426,8 @@ class Oblig2Test {
                     ("Oppgave 3v: Sublisten skal inneholde kun første verdi i listen!");
         }
 
+
+
         if (!cliste.subliste(9, 10).toString().equals("[J]")) {
             antallFeil++;
             System.out.println
