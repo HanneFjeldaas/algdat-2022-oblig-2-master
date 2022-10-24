@@ -40,10 +40,12 @@ Tidligere hale peker tilbake på ny hale.
 
 Oppgave 3,
 
-finnNode(). Metoden min er for treg, men har forsøkt både rekursiv og iterativt og
-vet ikke helt hvordan jeg skal løse det ellers. 
-Hvis indeks er mindre enn antall/2, begynner den å søke fra venstre side. 
-Hvis ikke søker den fra halen og bakover med forrige-pekere.
+OBS! feiler test 3a). Har sett over koden med studentassistent og ingen av oss finner feilen.
+Får en gradle-feilmelding eller noe sånt? Studentassistent sa at det mest sannsynlig er PCn
+min det er noe feil med og ikke koden. 
+
+finnNode () - Hvis indeks er mindre enn antall/2, begynner den å søke fra venstre side. 
+Hvis ikke søker den fra halen og bakover med forrige-pekere. Koden er tatt fra kompendiet. 
 
 hent() kaller på finnNode og indekskontroll. 
 
