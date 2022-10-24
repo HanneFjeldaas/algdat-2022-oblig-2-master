@@ -158,7 +158,35 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public void leggInn(int indeks, T verdi) {
-        throw new UnsupportedOperationException();
+        Objects.requireNonNull(verdi, "Ikke Gyldig Verdi!");
+
+        //Node blir plassert i tom liste
+        if (antall() == 0 && indeks == 0){
+            Node<T> n = new Node<>(verdi, hode, hale);
+            hode = hale = n;
+        }
+        //Node blir plassert fremst i liste
+        else if (indeks == 0){
+            Node<T> n = new Node<>(verdi, null, hode);
+            hode.forrige = n;
+            hode = n;
+        }
+        //Node blir plassert bakerst i liste
+        else if (indeks == antall()){
+            Node<T> n = new Node<>(verdi, hale, null);
+            hale.neste = n;
+            hale = n;
+        }
+        //Node blir plassert mellom to eksisterende i liste
+        else {
+            Node<T> flytter = finnNode(indeks);
+            Node<T> fremst = flytter.forrige;
+            Node<T> n = new Node<>(verdi, fremst, flytter);
+            flytter.forrige = n;
+            fremst.neste = n;
+        }
+        antall++;
+        endringer++;
     }
 
 
@@ -255,7 +283,26 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
     @Override
     public void nullstill() {
-        throw new UnsupportedOperationException();
+        Node<T> forste = hode;
+        Node<T> siste;
+        while(forste != null){
+            siste = forste.neste;
+            forste.neste = null;
+            forste.verdi = null;
+            forste = siste;
+        }
+        antall = 0;
+        hode = hale = null;
+        endringer ++;
+
+        /*
+        Metode 2, kjører saktere enn første metode og beholder den derfor ikke
+        for (Node<T> a = hode; a != null; a = a.neste) {
+            fjern(0);
+        }
+         */
+
+    }
     }
 
 
