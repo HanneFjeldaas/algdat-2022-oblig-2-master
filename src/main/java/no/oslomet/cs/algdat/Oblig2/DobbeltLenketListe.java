@@ -197,37 +197,35 @@ public class DobbeltLenketListe<T> implements Liste<T> {
 
 
     //Oppgave 3a
-    private Node<T> finnNode(int indeks) {
+    // hjelpemetode
+    private Node<T> finnNode(int indeks)
+    {
+        Node<T> p;
 
-        if (indeks<0 || indeks>antall) {
-            throw new IndexOutOfBoundsException("Indeks er ugyldig");
-        }
-
-        Node<T> temp;
-        if (indeks <= antall/2) {
-            temp = hode;
-            for (int i=0; i<indeks; i++) {
-                temp = temp.neste;
-            }
-        } else {
-            if (indeks==antall) {
-                return null;
-            }
-            temp = hale;
-            for (int i = antall-1; i>indeks; i--) {
-                temp = temp.forrige;
+        if (indeks <= antall / 2)
+        {
+            p = hode;
+            for (int i = 0; i < indeks; i++)
+            {
+                p = p.neste;
             }
         }
-        return temp;
+        else
+        {
+            p = hale;
+            for (int i = antall - 1; i > indeks; i--)
+            {
+                p = p.forrige;
+            }
+        }
+        return p;
     }
-
 
     //fra kompendiet, programkode 3.3.3 b)
     public T hent(int indeks) {
         indeksKontroll(indeks, false);
         return finnNode(indeks).verdi;
     }
-
 
 
     //noe av koden fra kompendiet, løsningsforslag til oppgave 2 i avsnitt 3.3.3.
@@ -255,8 +253,8 @@ public class DobbeltLenketListe<T> implements Liste<T> {
     @Override
     public T oppdater(int indeks, T nyverdi) {
         //ingen nullverdier tillatt:
-        Objects.requireNonNull(indeks);
         Objects.requireNonNull(nyverdi);
+
         indeksKontroll(indeks, false);
         //finner noden vi vil oppdatere
         Node<T> temp = finnNode(indeks);
