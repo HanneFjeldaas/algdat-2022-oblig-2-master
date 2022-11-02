@@ -14,6 +14,8 @@ I oppgaven har vi hatt følgende arbeidsfordeling:
 
 # Oppgavebeskrivelse
 
+OBS! Oppgave 3 er fortsatt for treg, men jeg så på det sammen med en TA (Gurjot) og vi fant ingen feil. Så jeg fikk beskjed om å la koden stå og levere som det var. 
+
 Oppgave 1
 Konstruktøren: bruker en løkke til å gå igjennom tabellen. Tilordner data 
 fra tabellen til en node. Bruker tester til å finne ut hvor noden skal 
