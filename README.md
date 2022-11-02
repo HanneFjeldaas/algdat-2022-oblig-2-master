@@ -3,7 +3,7 @@
 Denne oppgaven er en innlevering i Algoritmer og Datastrukturer. 
 Oppgaven er levert av følgende studenter:
 * Hanne Fjeldaas, S320960, s320960@oslomet.no
-* ...
+* Thuc Van Do, S364535, s364535@oslomet.no
 
 # Arbeidsfordeling
 
