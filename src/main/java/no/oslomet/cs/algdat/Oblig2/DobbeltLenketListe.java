@@ -442,10 +442,10 @@ public class DobbeltLenketListe<T> implements Liste<T> {
         @Override
         public T next() {
             if (endringer != iteratorendringer){
-                throw new ConcurrentModificationException("Det er gjort endringer.");
+                throw new ConcurrentModificationException("Endringer er gjort");
             }
             if(!hasNext()){
-                throw new NoSuchElementException("Det er ikke flere igjen i listen.");
+                throw new NoSuchElementException("Listen er tom");
             }
             fjernOK = true;
             T nyTemp = denne.verdi;
